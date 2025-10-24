@@ -1,0 +1,123 @@
+/* Shared sidebar styles (moved out of each page) */
+:root {
+    /* Sidebar width set to 70% of previous 260px to make it ~30% smaller */
+    --sidebar-width: 182px;
+    /* width to use when sidebar is collapsed but toggle remains visible */
+    --sidebar-collapsed-width: 44px;
+}
+
+*,
+::after,
+::before {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.container {
+    display: flex;
+}
+
+#sidebar {
+    display: flex;
+    flex-direction: column;
+    background-color: #0e2238;
+    min-height: 100vh;
+    width: var(--sidebar-width);
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 1.25rem;
+    z-index: 1000;
+    transition: width 0.25s ease, padding 0.2s ease, transform 0.25s ease;
+    overflow: hidden;
+}
+
+/* collapsed state reduces the panel to a small visible strip so the toggle stays visible */
+#sidebar.collapsed {
+    width: var(--sidebar-collapsed-width) !important;
+    padding: 0.25rem !important;
+}
+
+/* hide the label text when collapsed */
+#sidebar.collapsed .sidebar-link span {
+    display: none;
+}
+
+/* keep the toggle button visible and centered in collapsed strip */
+#sidebar .toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main {
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    transition: all 0.35s ease-in-out;
+    background-color: #fafbfe;
+}
+
+#toggler {
+    display: none;
+}
+
+.toggle-btn {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #FFF;
+    padding: 0.5rem 0.75rem;
+    width: max-content;
+    margin-bottom: 1rem;
+    background: transparent;
+    border: none;
+}
+
+/* Navigation inside the sidebar */
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #e6eef9;
+    padding: 0.9rem 0.9rem;
+    border-radius: 8px;
+    background: transparent;
+    transition: background 0.2s, transform 0.12s;
+}
+
+.sidebar-link:hover {
+    background: rgba(255,255,255,0.04);
+    transform: translateY(-2px);
+}
+
+.sidebar-link span {
+    font-weight: 600;
+}
+
+/* small-screen handling (put sidebar on top) */
+@media (max-width: 480px) {
+    #sidebar {
+        width: 100%;
+        position: relative;
+        display: block;
+    }
+}

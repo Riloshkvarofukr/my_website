@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mykhailo Potiy | Documents</title>
+  <style>
+    /* Reset */
+    * {margin: 0; padding: 0; box-sizing: border-box; font-family: 'Helvetica Neue', sans-serif;}
+    
+    body {
+      background: #f8f8f8;
+      color: #111;
+      line-height: 1.6;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar moved to shared sidebar.css (sidebar.html / sidebar.css) */
+
+    /* Main content wrapper */
+    .main-content {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 2rem;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    header h1 { font-weight: 400; }
+    header p { margin-top: 0.5rem; color: #555; }
+
+    section {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    h2 {
+      margin-bottom: 1rem;
+      font-weight: 500;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 0.5rem;
+    }
+
+    .document-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .document-card {
+      background: white;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid #e0e0e0;
+    }
+
+    .document-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .document-card h3 {
+      margin-bottom: 0.5rem;
+      color: #333;
+      font-size: 1.1rem;
+    }
+
+    .document-card p {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .document-link {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background: #0070f3;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: background 0.3s ease;
+      text-align: center;
+      width: 100%;
+    }
+
+    .document-link:hover {
+      background: #0056b3;
+    }
+
+    .pdf-icon {
+      width: 40px;
+      height: 40px;
+      background: #dc3545;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      color: white;
+      font-weight: bold;
+      font-size: 0.8rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #777;
+      border-top: 1px solid #ddd;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 140px;
+        padding: 1rem 0.5rem;
+      }
+      
+      .main-content {
+        margin-left: 140px;
+      }
+      
+      .sidebar-tile {
+        padding: 1rem 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      .document-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 1rem;
+      }
+      
+      .main-content {
+        margin-left: 0;
+      }
+      
+      body {
+        flex-direction: column;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="sidebar.css">
+</head>
+<body>
+
+<!-- Sidebar will be loaded from sidebar.html -->
+<div id="sidebar-placeholder"></div>
+
+<!-- Main Content -->
+<div class="main-content">
+<header>
+  <h1>Mykhailo Potiy</h1>
+  <p>Documents & CV Pages</p>
+</header>
+
+<section>
+  <p>Завантажте та перегляньте мої документи з резюме у форматі PDF. Ці документи підтверджують мою сертифікацію для викладення та перекладу англійської мови.</p>
+  
+  <div class="document-grid">
+    <div class="document-card">
+      <div class="pdf-icon">PDF</div>
+      <h3>IELTS</h3>
+      <p>Сертифікат академічного IELTS</p>
+      <a href="cv-pages/cv-pages-1.pdf" class="document-link" target="_blank">View PDF</a>
+    </div>
+    
+    <div class="document-card">
+      <div class="pdf-icon">PDF</div>
+      <h3>TESOL Specialization 1 </h3>
+      <p>Спеціалізація з англійської мови
+      для викладання англійської мови носіям інших мов.</p>
+      <a href="cv-pages/cv-pages-2.pdf" class="document-link" target="_blank">View PDF</a>
+    </div>
+    
+    <div class="document-card">
+      <div class="pdf-icon">PDF</div>
+      <h3>TESOL Specialization 2</h3>
+      <p> Спеціалізація з англійської мови
+      для викладання англійської мови спеціалістам.</p>
+      <a href="cv-pages/cv-pages-3.pdf" class="document-link" target="_blank">View PDF</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  &copy; 2025 Misha Potiy website 
+</footer>
+
+</div> <!-- End main-content -->
+
+<script>
+  // load the shared sidebar HTML into pages and attach toggle behavior
+  fetch('sidebar.html')
+    .then(function(r){ return r.text(); })
+    .then(function(html){
+      var p = document.getElementById('sidebar-placeholder');
+      if(!p) return;
+      p.innerHTML = html;
+
+      var sidebar = document.getElementById('sidebar');
+      if(!sidebar) return;
+      var btn = sidebar.querySelector('.toggle-btn');
+      var main = document.querySelector('.main-content');
+
+      // restore collapsed state
+      var saved = window.localStorage.getItem('sidebarCollapsed');
+      var isCollapsed = saved === 'true';
+      if(isCollapsed) sidebar.classList.add('collapsed');
+
+      if(main) main.style.marginLeft = getComputedStyle(sidebar).width;
+
+      if(btn){
+        btn.setAttribute('role','button');
+        btn.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
+        btn.addEventListener('click', function(){
+          var collapsed = sidebar.classList.toggle('collapsed');
+          try { window.localStorage.setItem('sidebarCollapsed', collapsed ? 'true' : 'false'); } catch(e){}
+          if(main) main.style.marginLeft = getComputedStyle(sidebar).width;
+          btn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+        });
+      }
+    })
+    .catch(function(){ /* fail silently */ });
+</script>
+
+</body>
+</html>

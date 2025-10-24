@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="Ukraine">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Михайло Потій | CV & Portfolio</title>
+  <style>
+    /* Reset */
+    * {margin: 0; padding: 0; box-sizing: border-box; font-family: 'Helvetica Neue', sans-serif;}
+    
+    body {
+      background: #f8f8f8;
+      color: #111;
+      line-height: 1.6;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar moved to shared sidebar.css (sidebar.html / sidebar.css) */
+
+    /* Main content wrapper */
+    .main-content {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 2rem;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    header h1 { font-weight: 400; }
+    header p { margin-top: 0.5rem; color: #555; }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #111;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover { color: #0070f3; }
+
+    section {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    /* Featured photo that matches the width of the main text column */
+    .featured-photo {
+      max-width: 800px;
+      margin: 1.5rem auto;
+      padding: 0 1rem;
+    }
+
+    .featured-photo img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+      object-fit: cover;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    }
+
+    h2 {
+      margin-bottom: 1rem;
+      font-weight: 500;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 0.5rem;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    li {
+      margin-bottom: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #777;
+      border-top: 1px solid #ddd;
+      font-size: 0.9rem;
+    }
+
+    a.button {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      margin-top: 1rem;
+      background: #111;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+
+    a.button:hover {
+      background: #0070f3;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 140px;
+        padding: 1rem 0.5rem;
+      }
+      
+      .main-content {
+        margin-left: 140px;
+      }
+      
+      .sidebar-tile {
+        padding: 1rem 0.5rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 1rem;
+      }
+      
+      .main-content {
+        margin-left: 0;
+      }
+      
+      body {
+        flex-direction: column;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="sidebar.css">
+  <link rel="stylesheet" href="css/social-icons.css">
+</head>
+<body>
+
+<!-- Sidebar will be loaded from sidebar.html -->
+<div id="sidebar-placeholder"></div>
+
+<!-- Main Content -->
+<div class="main-content">
+<header>
+  <h1>Mykhailo Potiy</h1>
+  <p>Interpreter | Translator | English Teacher</p>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#experience">Перекладач</a>
+    <a href="#teaching">Викладач</a>
+    <a href="#contact">Контакти</a>
+  </nav>
+</header>
+
+<!-- Featured photo placed between header and About; width matches text column below -->
+<div class="featured-photo">
+  <img src="photos/portrait.jpg" alt="Portrait of Mykhailo Potiy" onerror="this.style.opacity=0.5; this.style.background='#eee'">
+</div>
+
+<section id="about">
+  <h2>About</h2>
+  <p>Сертифікований викладач TESOL та носій англійської мови рівня C2 з досвідом перекладу, усного перекладу та академічного репетиторства. Спеціалізується на технічній, діловій та академічній англійській мові.</p>
+</section>
+
+<section id="experience">
+  <h2>Professional Experience</h2>
+  <ul>
+    <li><strong>Ferozit, Technical Translation</strong> – Translated 200+ pages of technical documentation, 2022.</li>
+    <li><strong>Ferozit Wind Energy, Interpreter</strong> – Facilitated negotiations for 85MW wind farms, 2021.</li>
+    <li><strong>Grand Fire, International Sales</strong> – Interpreted logistics and contracts across 6 countries, 2024.</li>
+    <li><strong>Caritas-Spes Ukraine</strong> – Translator & Assistant Project Manager for reconstruction projects in war zones, 2024.</li>
+  </ul>
+</section>
+
+<section id="teaching">
+  <h2>English Tutoring</h2>
+  <ul>
+    <li>6+ years tutoring IELTS Academic and professional English via Buki, Speak Up, Tower.</li>
+    <li>Specialized courses for aviation translators and IT professionals, 2023.</li>
+    <li>Academic support for biology professor with publications and research, 2 years.</li>
+  </ul>
+</section>
+
+<section id="contact">
+  <h2>Contact</h2>
+
+</section>
+
+<!-- Social icons: click to open respective profiles (replace href=# with your links) -->
+<div class="social-icons" aria-label="Social links">
+  <a class="facebook" href="https://www.facebook.com/share/17PFmduT8R/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><span class="icon facebook" aria-hidden="true"></span></a>
+  <a class="instagram" href="https://www.instagram.com/misha_potiy?igsh=aWw4Z3g1djM5ZXE4" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><span class="icon instagram" aria-hidden="true"></span></a>
+  <a class="twitter" href="https://x.com/mishapotiy?t=w889o_rebNmuQgP4ddlmRw&s=09" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><span class="icon twitter" aria-hidden="true"></span></a>
+  <a class="email" href="mailto:mpotiy5@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email"><span class="icon email" aria-hidden="true"></span></a>
+</div>
+
+<footer>
+  &copy; 2025 Mykhailo Potiy website 
+</footer>
+
+</div> <!-- End main-content -->
+
+  <script>
+  // load the shared sidebar HTML into pages and attach toggle behavior
+  fetch('sidebar.html')
+    .then(function(r){ return r.text(); })
+    .then(function(html){
+      var p = document.getElementById('sidebar-placeholder');
+      if(!p) return;
+      p.innerHTML = html;
+
+      // after injection, wire up toggle button
+      var sidebar = document.getElementById('sidebar');
+      if(!sidebar) return;
+
+      var btn = sidebar.querySelector('.toggle-btn');
+      var main = document.querySelector('.main-content');
+
+      // restore collapsed state from localStorage
+      var saved = window.localStorage.getItem('sidebarCollapsed');
+      var isCollapsed = saved === 'true';
+      if(isCollapsed) sidebar.classList.add('collapsed');
+
+      // ensure main margin reflects current sidebar width
+      if(main) main.style.marginLeft = getComputedStyle(sidebar).width;
+
+      if(btn){
+        btn.setAttribute('role','button');
+        btn.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
+        btn.addEventListener('click', function(){
+          var collapsed = sidebar.classList.toggle('collapsed');
+          // persist choice
+          try { window.localStorage.setItem('sidebarCollapsed', collapsed ? 'true' : 'false'); } catch(e){}
+          // recompute and apply spacing
+          if(main) main.style.marginLeft = getComputedStyle(sidebar).width;
+          btn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+        });
+      }
+    })
+    .catch(function(){ /* fail silently */ });
+  </script>
+
+  <script src="js/site.js"></script>
+
+</body>
+</html>
