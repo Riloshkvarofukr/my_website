@@ -24,22 +24,6 @@
       margin-left: var(--sidebar-width);
       min-height: 100vh;
     }
-
-    header {
-      padding: 2rem;
-      text-align: center;
-      border-bottom: 1px solid #ddd;
-    }
-
-    header h1 { font-weight: 400; }
-    header p { margin-top: 0.5rem; color: #555; }
-
-    section {
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
-
     h2 {
       margin-bottom: 1rem;
       font-weight: 500;
@@ -299,23 +283,54 @@
       var btn = sidebar.querySelector('.toggle-btn');
       var main = document.querySelector('.main-content');
 
-      // restore collapsed state
-      var saved = window.localStorage.getItem('sidebarCollapsed');
-      var isCollapsed = saved === 'true';
-      if(isCollapsed) sidebar.classList.add('collapsed');
+      var mqMobile = window.matchMedia('(max-width: 480px)');
 
-      if(main) main.style.marginLeft = getComputedStyle(sidebar).width;
+      var savedCollapsed = window.localStorage.getItem('sidebarCollapsed') === 'true';
+      var savedOpen = window.localStorage.getItem('sidebarOpen') === 'true';
+      if (savedCollapsed) sidebar.classList.add('collapsed');
+      // ensure overlay exists
+      var overlay = document.querySelector('.sidebar-overlay');
+      if(!overlay){ overlay = document.createElement('div'); overlay.className='sidebar-overlay'; document.body.appendChild(overlay); }
+
+      if (mqMobile.matches) {
+        if (savedOpen) sidebar.classList.add('open'); else sidebar.classList.remove('open');
+        if (sidebar.classList.contains('open')) overlay.classList.add('visible'); else overlay.classList.remove('visible');
+      }
+
+      function applySpacing(){
+        if(!main) return;
+        if (mqMobile.matches) {
+          if (sidebar.classList.contains('open')) { main.style.marginLeft = getComputedStyle(sidebar).width; overlay.classList.add('visible'); } else { main.style.marginLeft = '0'; overlay.classList.remove('visible'); }
+        } else {
+          main.style.marginLeft = getComputedStyle(sidebar).width;
+        }
+      }
+
+      applySpacing();
+      window.addEventListener('resize', applySpacing);
 
       if(btn){
         btn.setAttribute('role','button');
-        btn.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
+        btn.setAttribute('aria-expanded', sidebar.classList.contains('open') || !sidebar.classList.contains('collapsed'));
         btn.addEventListener('click', function(){
-          var collapsed = sidebar.classList.toggle('collapsed');
-          try { window.localStorage.setItem('sidebarCollapsed', collapsed ? 'true' : 'false'); } catch(e){}
-          if(main) main.style.marginLeft = getComputedStyle(sidebar).width;
-          btn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+          if (mqMobile.matches) {
+            var nowOpen = sidebar.classList.toggle('open');
+            try { window.localStorage.setItem('sidebarOpen', nowOpen ? 'true' : 'false'); } catch(e){}
+            if (nowOpen) sidebar.classList.remove('collapsed');
+            if (nowOpen) overlay.classList.add('visible'); else overlay.classList.remove('visible');
+          } else {
+            var collapsed = sidebar.classList.toggle('collapsed');
+            try { window.localStorage.setItem('sidebarCollapsed', collapsed ? 'true' : 'false'); } catch(e){}
+          }
+          applySpacing();
+          btn.setAttribute('aria-expanded', sidebar.classList.contains('open') || !sidebar.classList.contains('collapsed'));
         });
       }
+      // overlay click closes sidebar on mobile
+      overlay.addEventListener('click', function(){ if (!mqMobile.matches) return; sidebar.classList.remove('open'); overlay.classList.remove('visible'); try{ window.localStorage.setItem('sidebarOpen','false'); }catch(e){} applySpacing(); });
+      // clicking links inside sidebar closes it on mobile
+      var sideLinks = sidebar.querySelectorAll('.sidebar-link');
+      sideLinks.forEach(function(a){ a.addEventListener('click', function(){ if (mqMobile.matches) { sidebar.classList.remove('open'); overlay.classList.remove('visible'); try{ window.localStorage.setItem('sidebarOpen','false'); }catch(e){} applySpacing(); } }); });
     })
     .catch(function(){ /* fail silently */ });
 </script>
