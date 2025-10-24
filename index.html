@@ -298,6 +298,13 @@
         document.body.appendChild(overlay);
       }
 
+      // the mobile button is included in sidebar.html; if the script that provides additional behavior
+      // isn't loaded yet, append the small enhancement loader once (js/sidebar.js)
+      var mobileBtn = document.querySelector('.mobile-sidebar-button');
+      if (!document.querySelector('script[src="js/sidebar.js"]')) {
+        var s = document.createElement('script'); s.src = 'js/sidebar.js'; document.body.appendChild(s);
+      }
+
       var btn = sidebar.querySelector('.toggle-btn');
       var main = document.querySelector('.main-content');
 
@@ -309,23 +316,18 @@
       if (savedCollapsed) sidebar.classList.add('collapsed');
       if (mqMobile.matches) {
         // on mobile keep sidebar hidden by default unless user opened it
-        if (savedOpen) sidebar.classList.add('open');
-        else sidebar.classList.remove('open');
-        // show/hide overlay based on open state
+        if (savedOpen) { sidebar.classList.add('open'); if (mobileBtn) mobileBtn.classList.add('open'); }
+        else { sidebar.classList.remove('open'); if (mobileBtn) mobileBtn.classList.remove('open'); }
+        // show/hide overlay based on open state (overlay-only UX: we will not shift main content on mobile)
         if (sidebar.classList.contains('open')) overlay.classList.add('visible'); else overlay.classList.remove('visible');
       }
 
       function applySpacing(){
         if(!main) return;
         if (mqMobile.matches) {
-          // on mobile shift content only when sidebar is open
-          if (sidebar.classList.contains('open')) {
-            main.style.marginLeft = getComputedStyle(sidebar).width;
-            overlay.classList.add('visible');
-          } else {
-            main.style.marginLeft = '0';
-            overlay.classList.remove('visible');
-          }
+          // overlay-only UX on mobile: don't shift main content, leave margin at 0
+          main.style.marginLeft = '0';
+          if (sidebar.classList.contains('open')) overlay.classList.add('visible'); else overlay.classList.remove('visible');
         } else {
           // desktop: main content margin matches sidebar width (collapsed or full)
           main.style.marginLeft = getComputedStyle(sidebar).width;
@@ -363,13 +365,27 @@
           if (!mqMobile.matches) return;
           sidebar.classList.remove('open');
           overlay.classList.remove('visible');
+          if (mobileBtn) mobileBtn.classList.remove('open');
           try { window.localStorage.setItem('sidebarOpen', 'false'); } catch(e){}
           applySpacing();
         });
 
         // when any sidebar link is clicked on mobile, close the sidebar
         var sideLinks = sidebar.querySelectorAll('.sidebar-link');
-        sideLinks.forEach(function(a){ a.addEventListener('click', function(){ if (mqMobile.matches) { sidebar.classList.remove('open'); overlay.classList.remove('visible'); try{ window.localStorage.setItem('sidebarOpen','false'); }catch(e){} applySpacing(); } }); });
+        sideLinks.forEach(function(a){ a.addEventListener('click', function(){ if (mqMobile.matches) { sidebar.classList.remove('open'); overlay.classList.remove('visible'); if (mobileBtn) mobileBtn.classList.remove('open'); try{ window.localStorage.setItem('sidebarOpen','false'); }catch(e){} applySpacing(); } }); });
+
+        // mobile floating button toggles the sidebar
+        if (mobileBtn) {
+          mobileBtn.addEventListener('click', function(e){
+            e.stopPropagation();
+            var nowOpen = sidebar.classList.toggle('open');
+            try { window.localStorage.setItem('sidebarOpen', nowOpen ? 'true' : 'false'); } catch(e){}
+            if (nowOpen) { sidebar.classList.remove('collapsed'); overlay.classList.add('visible'); mobileBtn.classList.add('open'); }
+            else { overlay.classList.remove('visible'); mobileBtn.classList.remove('open'); }
+            applySpacing();
+            if (btn) btn.setAttribute('aria-expanded', sidebar.classList.contains('open') || !sidebar.classList.contains('collapsed'));
+          });
+        }
       }
     })
     .catch(function(){ /* fail silently */ });

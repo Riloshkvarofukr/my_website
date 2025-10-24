@@ -7,3 +7,17 @@
         <a class="sidebar-link" href="documents.html" aria-label="Documents"><span>Docs</span></a>
     </nav>
 </aside>
+<!-- Mobile floating button moved into shared fragment so every page gets it when sidebar.html is injected -->
+<button class="mobile-sidebar-button" aria-label="Open menu" aria-controls="sidebar" aria-expanded="false">
+    <svg class="mobile-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+        <g class="hamburger" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M3 7h18" />
+            <path d="M3 12h18" />
+            <path d="M3 17h18" />
+        </g>
+        <g class="close" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="opacity:0;">
+            <path d="M6 6l12 12" />
+            <path d="M6 18L18 6" />
+        </g>
+    </svg>
+</button>

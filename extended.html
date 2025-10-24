@@ -236,21 +236,28 @@
       var savedCollapsed = window.localStorage.getItem('sidebarCollapsed') === 'true';
       var savedOpen = window.localStorage.getItem('sidebarOpen') === 'true';
       if (savedCollapsed) sidebar.classList.add('collapsed');
+      // ensure overlay exists
+      var overlay = document.querySelector('.sidebar-overlay');
+      if(!overlay){ overlay = document.createElement('div'); overlay.className='sidebar-overlay'; document.body.appendChild(overlay); }
+
+      // mobile button is part of the injected sidebar fragment; reference it if present
+      var mobileBtn = document.querySelector('.mobile-sidebar-button');
+      // load enhancement script (handles ESC/focus-trap) once
+      if (!document.querySelector('script[src="js/sidebar.js"]')) { var s = document.createElement('script'); s.src = 'js/sidebar.js'; document.body.appendChild(s); }
+
       if (mqMobile.matches) {
-        if (savedOpen) sidebar.classList.add('open'); else sidebar.classList.remove('open');
+        if (savedOpen) { sidebar.classList.add('open'); if (mobileBtn) mobileBtn.classList.add('open'); } else { sidebar.classList.remove('open'); if (mobileBtn) mobileBtn.classList.remove('open'); }
+        if (sidebar.classList.contains('open')) overlay.classList.add('visible'); else overlay.classList.remove('visible');
       }
 
       function applySpacing(){
         if(!main) return;
         if (mqMobile.matches) {
-          if (sidebar.classList.contains('open')) {
-            main.style.marginLeft = getComputedStyle(sidebar).width;
-            overlay.classList.add('visible');
-          } else {
-            main.style.marginLeft = '0';
-            overlay.classList.remove('visible');
-          }
+          // overlay-only UX: never shift the main content on small screens
+          main.style.marginLeft = '0';
+          if (sidebar.classList.contains('open')) overlay.classList.add('visible'); else overlay.classList.remove('visible');
         } else {
+          // desktop: main content margin matches sidebar width (collapsed or full)
           main.style.marginLeft = getComputedStyle(sidebar).width;
         }
       }
@@ -267,6 +274,7 @@
             try { window.localStorage.setItem('sidebarOpen', nowOpen ? 'true' : 'false'); } catch(e){}
             if (nowOpen) sidebar.classList.remove('collapsed');
             if (nowOpen) overlay.classList.add('visible'); else overlay.classList.remove('visible');
+            if (mobileBtn) mobileBtn.classList.toggle('open', nowOpen);
           } else {
             var collapsed = sidebar.classList.toggle('collapsed');
             try { window.localStorage.setItem('sidebarCollapsed', collapsed ? 'true' : 'false'); } catch(e){}
@@ -276,10 +284,14 @@
         });
       }
       // overlay click closes sidebar on mobile
-      overlay.addEventListener('click', function(){ if (!mqMobile.matches) return; sidebar.classList.remove('open'); overlay.classList.remove('visible'); try{ window.localStorage.setItem('sidebarOpen','false'); }catch(e){} applySpacing(); });
+      overlay.addEventListener('click', function(){ if (!mqMobile.matches) return; sidebar.classList.remove('open'); overlay.classList.remove('visible'); if (mobileBtn) mobileBtn.classList.remove('open'); try{ window.localStorage.setItem('sidebarOpen','false'); }catch(e){} applySpacing(); });
       // clicking links inside sidebar closes it on mobile
       var sideLinks = sidebar.querySelectorAll('.sidebar-link');
-      sideLinks.forEach(function(a){ a.addEventListener('click', function(){ if (mqMobile.matches) { sidebar.classList.remove('open'); overlay.classList.remove('visible'); try{ window.localStorage.setItem('sidebarOpen','false'); }catch(e){} applySpacing(); } }); });
+      sideLinks.forEach(function(a){ a.addEventListener('click', function(){ if (mqMobile.matches) { sidebar.classList.remove('open'); overlay.classList.remove('visible'); if (mobileBtn) mobileBtn.classList.remove('open'); try{ window.localStorage.setItem('sidebarOpen','false'); }catch(e){} applySpacing(); } }); });
+      // mobile floating button toggles the sidebar
+      if (mobileBtn) {
+        mobileBtn.addEventListener('click', function(e){ e.stopPropagation(); var nowOpen = sidebar.classList.toggle('open'); try { window.localStorage.setItem('sidebarOpen', nowOpen ? 'true' : 'false'); } catch(e){} if (nowOpen) { sidebar.classList.remove('collapsed'); overlay.classList.add('visible'); mobileBtn.classList.add('open'); } else { overlay.classList.remove('visible'); mobileBtn.classList.remove('open'); } applySpacing(); if (btn) btn.setAttribute('aria-expanded', sidebar.classList.contains('open') || !sidebar.classList.contains('collapsed')); });
+      }
     })
     .catch(function(){ /* fail silently */ });
 </script>
