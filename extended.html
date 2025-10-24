@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mykhailo Potiy | Extended CV</title>
@@ -90,6 +89,10 @@
         margin-left: 140px;
       }
       
+      section {
+        padding: 0 1.5rem;
+      }
+      
       .sidebar-tile {
         padding: 1rem 0.5rem;
         font-size: 0.9rem;
@@ -97,6 +100,10 @@
     }
 
     @media (max-width: 480px) {
+      body {
+        flex-direction: column;
+      }
+
       .sidebar {
         width: 100%;
         height: auto;
@@ -106,10 +113,53 @@
       
       .main-content {
         margin-left: 0;
+        width: 100%;
+        max-width: 100%;
+        padding: 0;
+      }
+
+      header {
+        padding: 1.5rem 1rem;
+      }
+
+      section {
+        width: 100%;
+        max-width: 100%;
+        padding: 0 1.5rem;
+        margin: 1.5rem 0;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      p, li {
+        font-size: 1rem;
+        line-height: 1.6;
+        text-align: justify;
+      }
+    }
+
+    /* Additional small screen optimizations */
+    @media (max-width: 360px) {
+      header h1 {
+        font-size: 1.5rem;
       }
       
-      body {
-        flex-direction: column;
+      header p {
+        font-size: 0.9rem;
+      }
+
+      section {
+        padding: 0 1rem;
+      }
+
+      h2 {
+        font-size: 1.35rem;
+      }
+
+      p, li {
+        font-size: 0.95rem;
       }
     }
   </style>

@@ -117,7 +117,59 @@ body {
 @media (max-width: 480px) {
     #sidebar {
         width: 100%;
+        min-height: auto;
         position: relative;
-        display: block;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 0.75rem;
+    }
+
+    #sidebar.collapsed {
+        width: 100% !important;
+        padding: 0.75rem !important;
+    }
+
+    .sidebar-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-left: 1rem;
+    }
+
+    .toggle-btn {
+        margin-bottom: 0;
+    }
+
+    .sidebar-link {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    /* Don't hide spans on mobile when collapsed */
+    #sidebar.collapsed .sidebar-link span {
+        display: inline;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 360px) {
+    #sidebar {
+        padding: 0.5rem;
+    }
+
+    .sidebar-nav {
+        gap: 0.25rem;
+    }
+
+    .sidebar-link {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.85rem;
+    }
+
+    .toggle-btn {
+        padding: 0.4rem 0.5rem;
+        font-size: 1.25rem;
     }
 }

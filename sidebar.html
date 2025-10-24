@@ -1,22 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sidebar Navigation</title>
-    <link rel="stylesheet" href="sidebar.css">
-    <link rel="stylesheet" href="css/social-icons.css">
-</head>
-<body>
-    <aside id="sidebar">
-        <input type="checkbox" id="toggler" />
-        <label for="toggler" class="toggle-btn">☰</label>
-        <nav class="sidebar-nav">
-            <a class="sidebar-link" href="./index.html"><span>CV</span></a>
-            <a class="sidebar-link" href="extended.html"><span>Додатково</span></a>
-            <a class="sidebar-link" href="documents.html"><span>Docs</span></a>
-        </nav>
-    </aside>
-    <script src="js/site.js"></script>
-</body>
-</html>
+<aside id="sidebar">
+    <input type="checkbox" id="toggler" class="sidebar-toggle" />
+    <label for="toggler" class="toggle-btn" aria-label="Toggle Menu">☰</label>
+    <nav class="sidebar-nav" role="navigation">
+        <a class="sidebar-link" href="./" aria-label="CV"><span>CV</span></a>
+        <a class="sidebar-link" href="extended.html" aria-label="Extended CV"><span>Додатково</span></a>
+        <a class="sidebar-link" href="documents.html" aria-label="Documents"><span>Docs</span></a>
+    </nav>
+</aside>
